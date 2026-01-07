@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Temperature Converter</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+
+    background: linear-gradient(
+        120deg,
+        #2193b0,
+        #6dd5ed,
+        #ff9a9e,
+        #fad0c4
+    );
+
+    background-size: 300% 300%;
+    animation: tempFlow 10s ease infinite;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes tempFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+.converter-card {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(14px);
+    padding: 45px 40px;
+    width: 420px;
+    border-radius: 22px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.5);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+
+
+input, select {
+    width: 100%;
+    height: 52px;
+    padding: 0 18px;
+    border-radius: 16px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+select {
+    cursor: pointer;
+}
+
+button {
+    width: 100%;
+    height: 56px;
+    background: linear-gradient(135deg, #00e5ff, #1de9b6);
+    border: none;
+    border-radius: 18px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+}
+
+
+#output {
+    margin-top: 25px;
+    font-size: 22px;
+    color: #00ffea;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="converter-card">
+    <h1>🌡️ Temperature Converter</h1>
+
+    <div class="form-group">
+    <input type="number" id="temp" placeholder="Enter temperature">
+
+    <select id="mode">
+        <option value="cToF">Celsius → Fahrenheit</option>
+        <option value="fToC">Fahrenheit → Celsius</option>
+        <option value="cToK">Celsius → Kelvin</option>
+        <option value="kToC">Kelvin → Celsius</option>
+        <option value="cToRa">Celsius → Rankine</option>
+        <option value="raToC">Rankine → Celsius</option>
+        <option value="cToRe">Celsius → Réaumur</option>
+        <option value="reToC">Réaumur → Celsius</option>
+        <option value="cToDe">Celsius → Delisle</option>
+        <option value="deToC">Delisle → Celsius</option>
+        <option value="cToN">Celsius → Newton</option>
+        <option value="nToC">Newton → Celsius</option>
+        <option value="cToRo">Celsius → Rømer</option>
+        <option value="roToC">Rømer → Celsius</option>
+    </select>
+<div id="output"></div>
+
+    <button onclick="convertTemp()">Convert</button>
+</div>
+
+
+    
+
+<script>
+function convertTemp() {
+    const temp = document.getElementById("temp").value;
+    const mode = document.getElementById("mode").value;
+    const output = document.getElementById("output");
+
+    if (temp === "") {
+        output.innerHTML = "⚠️ Please enter a temperature";
+        return;
+    }
+
+    let result, unit;
+    const t = parseFloat(temp);
+
+    switch (mode) {
+        case "cToF": result = (t * 9/5) + 32; unit = "°F"; break;
+        case "fToC": result = (t - 32) * 5/9; unit = "°C"; break;
+        case "cToK": result = t + 273.15; unit = "K"; break;
+        case "kToC": result = t - 273.15; unit = "°C"; break;
+        case "cToRa": result = (t + 273.15) * 9/5; unit = "°R"; break;
+        case "raToC": result = (t - 491.67) * 5/9; unit = "°C"; break;
+        case "cToRe": result = t * 4/5; unit = "°Ré"; break;
+        case "reToC": result = t * 5/4; unit = "°C"; break;
+        case "cToDe": result = (100 - t) * 3/2; unit = "°De"; break;
+        case "deToC": result = 100 - (t * 2/3); unit = "°C"; break;
+        case "cToN": result = t * 33/100; unit = "°N"; break;
+        case "nToC": result = t * 100/33; unit = "°C"; break;
+        case "cToRo": result = (t * 21/40) + 7.5; unit = "°Rø"; break;
+        case "roToC": result = (t - 7.5) * 40/21; unit = "°C"; break;
+    }
+
+    output.innerHTML = `Result: <b>${result.toFixed(2)} ${unit}</b>`;
+}
+</script>
+
+</body>
+</html>
